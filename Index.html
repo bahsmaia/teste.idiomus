@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100;1,400&family=Sigmar&display=swap" rel="stylesheet">
+    <title>Hero Section Parallax + Forca</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+        body {
+            background: #111;
+            color: white;
+            font-family: Comfortaa, sans-serif;
+            overflow-x: hidden;
+            overflow-y: auto;
+            min-height: 100vh;
+            cursor: none;
+            display: flex;
+            flex-direction: column;
+        }
+        #forca {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 25px; /* Reduzido adicionalmente */
+    border-radius: 10px;
+    margin: 5px auto 0; /* Centralizado e margem superior mínima */
+    width: 100%; /* Controle de largura */
+    max-width: 100%; /* Limite máximo */
+}
+        #letters button { margin: 5px; padding: 10px 15px; font-size: 1rem; cursor: pointer; }
+        #message { margin-top: 20px; font-size: 1.5rem; font-weight: bold; }
+        .cursor {
+            width: 15px;
+            height: 15px;
+            background: gray;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s linear;
+            z-index: 9999;
+            visibility: visible;
+        }
+        .menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .menu a:hover {
+            color: #707070;
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+        .parallax {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: url('images/Banner.png') no-repeat center center/cover;
+            z-index: -1;
+            transform: translateY(0px);
+        }
+        .parallax-text {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            max-width: 700px;
+            z-index: 2;
+            transition: transform 0.1s ease-out;
+            margin-bottom: 20px;
+        }
+        .cta-button {
+            font-size: 1rem;
+            padding: 25px 50px;
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        .cta-button:hover {
+            background: white;
+            color: black;
+        }
+        .image-gallery {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 50px 10%;
+            background: #111;
+        }
+        .gallery-item {
+            width: 30%;
+            height: 300px;
+            background: #222;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s;
+            border-radius: 10px;
+
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Rodapé igual ao cabeçalho */
+.footer {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 30px;
+    text-align: center;
+    margin-top: 50px;
+    position: relative;
+    z-index: 1000;
+}
+
+.footer p {
+    color: white;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+}
+
+
+        #wordDisplay {
+    font-size: 1.8em; /* Reduzido de 2em */
+    letter-spacing: 0.2em;
+    margin: 8px 0; /* Espaçamento vertical reduzido */
+}
+
+#hints {
+    font-size: 1em; /* Tamanho menor */
+    color: #aaaaaa; /* Cor original visível */
+    margin: 8px 0; /* Espaço uniforme */
+    padding: 5px;
+}
+        
+        #forca h2 {
+    margin-bottom: 15px; /* Controle específico para o espaço abaixo do título */
+}
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .button:disabled {
+            background-color: #ccc;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <nav class="menu">
+        <a href="#">Home</a>
+        <a href="#">Sobre</a>
+        <a href="#">Contato</a>
+    </nav>
+    <section class="hero">
+        <div class="parallax"></div>
+        <h1 class="parallax-text">Aprenda inglês de forma natural tendo os maiores líderes, artistas e ícones do mundo como seus professores.</h1>
+        <div class="button-container">
+            <button class="cta-button">Saiba Mais</button>
+        </div>
+    </section>
+    <section class="image-gallery">
+        <div class="gallery-item" style="background-image: url('images/imagem1.jpg');"></div>
+        <div class="gallery-item" style="background-image: url('images/imagem2.jpg');"></div>
+        <div class="gallery-item" style="background-image: url('images/imagem3.jpg');"></div>
+    </section>
+    <section class="content">
+        <div id="forca">
+            <h2>Teste seu nível</h2>
+            <div id="wordDisplay"></div>
+            <div id="letters"></div>
+            <div id="hints"></div>
+            <div id="message"></div>
+        </div>
+    </section>
+    <footer class="footer">
+        <p>© 2025 Todos os direitos reservados</p>
+        <p>Desenvolvido com ♡ por Barbara Maia</p>
+    </footer>
+    <script>
+        const cursor = document.querySelector(".cursor");
+
+        document.addEventListener("mousemove", (e) => {
+            let x = e.clientX;
+            let y = e.clientY;
+            
+            cursor.style.left = `${x}px`;
+            cursor.style.top = `${y}px`;
+            
+            let mouseX = (e.clientX / window.innerWidth - 0.5) * 40;
+            let mouseY = (e.clientY / window.innerHeight - 0.5) * 40;
+            
+            document.querySelector(".parallax-text").style.transform = `rotateY(${mouseX}deg) rotateX(${mouseY}deg)`;
+        });
+
+        document.addEventListener("scroll", () => {
+            document.querySelector(".parallax").style.transform = `translateY(${window.scrollY * 0.5}px)`;
+        });
+
+        const words = [
+            { word: "apple", hints: ["Fruta", "Vermelha ou verde", "Steve Jobs gosta"] },
+            { word: "ocean", hints: ["Água salgada", "Grande", "Peixes"] },
+            { word: "guitar", hints: ["Música", "Cordas", "Jimi Hendrix"] },
+            { word: "book", hints: ["Objeto usado para leitura", "Pode ser ficção ou não-ficção", "Contém páginas"] },
+            { word: "elephant", hints: ["Animal grande", "Vive em savanas ou florestas", "Tem uma tromba"] },
+            { word: "restaurant", hints: ["Lugar para refeições", "Serve comida e bebida", "Pode ser fast food ou fine dining"] },
+            { word: "psychology", hints: ["Estudo da mente humana", "Envolve comportamento e processos mentais", "Psicólogos estudam isso"] },
+            { word: "parliament", hints: ["Órgão legislativo", "Associa-se a governos", "Conhecido como Congresso em alguns países"] }
+        ];
+
+        let game, displayWord, correctGuesses, wrongGuesses, hintIndex;
+
+        function startGame() {
+            game = words[Math.floor(Math.random() * words.length)];
+            displayWord = Array(game.word.length).fill("_");
+            correctGuesses = 0;
+            wrongGuesses = 0;
+            hintIndex = 0;
+
+            document.getElementById("wordDisplay").innerText = displayWord.join(" ");
+            document.getElementById("hints").innerText = "Dica 1: " + game.hints[0];
+            document.getElementById("message").innerText = "";
+
+            const lettersContainer = document.getElementById("letters");
+            lettersContainer.innerHTML = "";  // Limpar botões anteriores
+
+            "abcdefghijklmnopqrstuvwxyz".split("").forEach(letter => {
+                const button = document.createElement("button");
+                button.innerText = letter;
+                button.onclick = () => guess(letter, button);
+                lettersContainer.appendChild(button);
+            });
+        }
+
+        function guess(letter, button) {
+            button.disabled = true;
+            let found = false;
+
+            game.word.split("").forEach((char, i) => {
+                if (char === letter) {
+                    displayWord[i] = letter;
+                    found = true;
+                    correctGuesses++;
+                }
+            });
+
+            if (!found) {
+                wrongGuesses++;
+            }
+
+            document.getElementById("wordDisplay").innerText = displayWord.join(" ");
+            checkGameOver();
+        }
+
+        function checkGameOver() {
+            if (correctGuesses === game.word.length) {
+                document.getElementById("message").innerText = "Você venceu!";
+            } else if (wrongGuesses >= 6) {
+                document.getElementById("message").innerText = "Fim de Jogo!";
+            }
+        }
+
+        startGame();
+
+        function guess(letter, button) {
+    button.disabled = true;
+    let found = false;
+
+    game.word.split("").forEach((char, i) => {
+        if (char === letter) {
+            displayWord[i] = letter;
+            found = true;
+            correctGuesses++;
+        }
+    });
+
+    if (!found) {
+        wrongGuesses++;
+        // Mudar a dica a cada erro
+        if (hintIndex < game.hints.length - 1) {
+            hintIndex++;
+            document.getElementById("hints").innerText = `Dica ${hintIndex + 1}: ` + game.hints[hintIndex];
+        }
+    }
+
+    document.getElementById("wordDisplay").innerText = displayWord.join(" ");
+    checkGameOver();
+}
+
+    </script>
+</body>
+</html>
